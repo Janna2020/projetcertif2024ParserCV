@@ -8,24 +8,38 @@ from PyPDF2 import PdfReader
 import streamlit as st
 import streamlit_pdf_viewer as pdf_viewer
 import os
-
+import io
 
 # Set page title
 st.set_page_config(page_title="My HR App", page_icon=":rocket:")
 
-# Add a title and description
-st.title("Welcome to My HR App!")
+
+# Utiliser st.markdown() avec du balisage HTML pour appliquer la police, la couleur et le style gras
+
+# Utiliser st.markdown() avec du balisage HTML pour appliquer le style spécifique
+st.markdown(
+    "<p style='text-align: center; font-family: Anta, monospace; color: blue; font-weight: bold; font-size: 45px;'>THE NEW WAY TO HIRE</p>",
+    unsafe_allow_html=True
+)
+
+st.markdown("<p style='text-align: right; font-family: Anta, monospace; color: blue; font-size: 15px; font-weight: bold;'>powered by HireLakeAI</p>",
+    unsafe_allow_html=True)
+
+# Titre de l'application
+st.image('how-ai-is-transforming-hr-1130x628.jpg')
+
+
+# Utiliser st.markdown() avec du balisage HTML pour appliquer le style spécifique
+st.markdown("<h1 style='text-align: center; font-family: Anta, sans-serif; color: blue;'>WELCOME TO YOUR APP</h1>",unsafe_allow_html=True)
+
+
+# Utiliser st.markdown() avec du balisage HTML pour appliquer le style spécifique
+st.markdown("<p style='text-align: center; font-family: Kode Mono, monospace; color: green; font-size: 48px;'>Parser CV</p>",unsafe_allow_html=True)
+
 
 # Add a logo
-st.sidebar.image("logoHireAI.avif", use_column_width=True)
+st.sidebar.image("futureofAI.png", use_column_width=True)
 
-# Add an image from a URL
-st.image("imageappliIAIHR.jpeg", caption="AI application for Human Ressources", use_column_width=True)
-
-
-
-
-st.title("Analyse de CV")
 # st.text("powered by HireLakeAI")
 # Créer deux colonnes
 col1, col2 = st.columns(2)
@@ -48,8 +62,7 @@ with col1:
 
 # Ajouter du contenu à la colonne 2
 with col2:
-    # Contenu de la colonne 2
-    st.title("PARSER CV")
+
 
     # Entraînement du modèle
     nlp = spacy.load('output/model-best')
@@ -73,7 +86,12 @@ with col2:
         text = ' '.join(text.split())  # Join words with a single space
         print(text)
         doc = nlp(text)
+        import streamlit as st
+
+    # Boucle sur les entités et affichage avec des couleurs différentes pour les labels et les textes, et en gras
         for ent in doc.ents:
-            st.write(ent.label_, ":", ent.text)
+            label_html = f"<span style='font-family:Georgia; font-size: 16px; color: blue; font-weight: bold;'>{ent.label_}</span>"
+            text_html = f"<span style='font-family: Arial; font-size: 16px; color: green;'>{ent.text}</span>"
+            st.markdown(f"{label_html}: {text_html}", unsafe_allow_html=True)
     else:
-        st.write("No PDF file uploaded.")
+        ("No PDF file uploaded.")
